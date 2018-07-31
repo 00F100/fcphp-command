@@ -1,0 +1,32 @@
+{
+    "name": "00f100/fcphp-command",
+    "type": "package",
+    "version": "0.1.0",
+    "description": "Library to manipulate console commands into FcPhp",
+    "keywords": ["console", "manager", "fcphp", "command"],
+    "homepage": "https://github.com/00f100/fcphp-command",
+    "authors": [
+        {
+            "name": "João Moraes",
+            "email": "joaomoraesbr@gmail.com",
+            "homepage": "https://github.com/00f100"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "00f100/fcphp-autoload": "0.*",
+        "00f100/fcphp-cache": "0.*",
+        "00f100/fcphp-sconsole": "0.*",
+        "00f100/fcphp-di": "0.*"
+    },
+    "require-dev": {
+        "00f100/phpdbug": "*",
+        "phpunit/phpunit": "6.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "FcPhp\\Command\\": "src/",
+            "FcPhp\\Command\\Test\\": "tests/"
+        }
+    }
+}
