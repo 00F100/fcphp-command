@@ -2,6 +2,8 @@
 
 namespace FcPhp\Command\Interfaces
 {
+    use FcPhp\Di\Interfaces\IDi;
+    
     interface ICommandFactory
     {
         /**

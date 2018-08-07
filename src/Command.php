@@ -12,13 +12,49 @@ namespace FcPhp\Command
     class Command implements ICommand
     {
         const TTL_COMMAND = 84000;
+
+        /**
+         * @var string Key to cache
+         */
         private $key;
+
+        /**
+         * @var FcPhp\SConsole\Interfaces\ISCEntity
+         */
         private $entity;
+
+        /**
+         * @var FcPhp\Autoload\Interfaces\IAutoload
+         */
         private $autoload;
+
+        /**
+         * @var FcPhp\Cache\Interfaces\ICache
+         */
         private $cache;
+
+        /**
+         * @var FcPhp\Command\Interfaces\ICommandFactory
+         */
         private $factory;
+
+        /**
+         * @var array List of commands 
+         */
         private $commands = [];
 
+        /**
+         * Method to construct instance
+         *
+         * @param FcPhp\SConsole\Interfaces\ISCEntity $entity Security Command Entity
+         * @param FcPhp\Autoload\Interfaces\IAutoload $autoloa Autoload files
+         * @param FcPhp\Cache\Interfaces\ICache $cache Cache commands
+         * @param string $vendorPath Path to load files using Autoload
+         * @param FcPhp\Command\Interfaces\ICommandFactory $factory Factory to create instance of CEntity
+         * @param array $commands
+         * @param bool $noCache No use cache?
+         * @return void
+         */
         public function __construct(ISCEntity $entity, IAutoload $autoload, ICache $cache, string $vendorPath, ICommandFactory $factory, array $commands = [], bool $noCache = false)
         {
             $this->key = md5(serialize($vendorPath) . serialize($commands));
@@ -37,12 +73,25 @@ namespace FcPhp\Command
             }
         }
 
-        public function match(array $args)
+        /**
+         * Method to match command and return CEntity
+         *
+         * @param array $args Console args
+         * @return FcPhp\Command\Interfaces\ICEntity
+         */
+        public function match(array $args) :ICEntity
         {
             return $this->find($args, $args);
         }
 
-        private function find(array $args, array $fullArgs)
+        /**
+         * Method to find command into list
+         *
+         * @param array $args Console args
+         * @param array $fullArgs Console args non updated
+         * @return FcPhp\Command\Interfaces\ICEntity
+         */
+        private function find(array $args, array $fullArgs) :ICEntity
         {
             $count = 0;
             $commands = $this->commands;
@@ -98,6 +147,12 @@ namespace FcPhp\Command
             ]);
         }
 
+        /**
+         * Method to reset count of arrau
+         *
+         * @param array $args Array to reset
+         * @return void
+         */
         private function resetCountArray(array &$args) :void
         {
             $array = [];
