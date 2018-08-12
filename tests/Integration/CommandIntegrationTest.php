@@ -10,19 +10,16 @@ use FcPhp\Autoload\Autoload;
 use FcPhp\SConsole\SCEntity;
 use FcPhp\Cache\Facades\CacheFacade;
 use FcPhp\Di\Facades\DiFacade;
+use FcPhp\Command\Facades\CommandFacade;
 
 class CommandIntegrationTest extends TestCase
 {
     public function setUp()
     {
-        $this->di = DiFacade::getInstance();
         $this->entity = new SCEntity();
         $this->entity->setType('user');
         $this->entity->setPermissions(['example-permission', 'connect-datasource', 'connect-rule']);
-        $this->autoload = new Autoload();
-        $this->cache = CacheFacade::getInstance('tests/var/cache');
         $this->vendorPath = 'tests/*/*/config';
-        $this->factory = new CommandFactory($this->di);
         $this->commands = [
             'package' => [
                 [
@@ -34,7 +31,7 @@ class CommandIntegrationTest extends TestCase
             ]
         ];
 
-        $this->instance = new Command($this->entity, $this->autoload, $this->cache, $this->vendorPath, $this->factory, $this->commands);
+        $this->instance = CommandFacade::getInstance($this->entity, $this->commands, $this->vendorPath);
     }
 
     public function testInstance()
